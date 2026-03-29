@@ -1,0 +1,12 @@
+{
+  "name": "brain-script-functions",
+  "version": "1.0.0",
+  "description": "Netlify functions for Brain Script",
+  "main": "generate-topics.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}

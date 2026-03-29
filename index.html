@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brain-script</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Define global for libraries that expect it
+      if (typeof global === 'undefined') {
+        window.global = window;
+      }
+      // Prevent libraries from trying to overwrite fetch if it's already defined
+      // and read-only (common in some iframe environments)
+      const originalFetch = window.fetch;
+      try {
+        Object.defineProperty(window, 'fetch', {
+          get: () => originalFetch,
+          configurable: false,
+          enumerable: true
+        });
+      } catch (e) {
+        console.warn('Could not lock fetch property:', e);
+      }
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
