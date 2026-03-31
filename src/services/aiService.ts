@@ -2,6 +2,10 @@ const API_BASE = import.meta.env.VITE_API_URL || '';
 
 export const generateTopics = async (subject: string) => {
   try {
+    console.log('Calling generate topics function...');
+    console.log('API_BASE:', API_BASE);
+    console.log('Full URL:', `${API_BASE}/.netlify/functions/generate-topics`);
+    
     const response = await fetch(`${API_BASE}/.netlify/functions/generate-topics`, {
       method: 'POST',
       headers: {
@@ -10,15 +14,21 @@ export const generateTopics = async (subject: string) => {
       body: JSON.stringify({ subject }),
     });
 
+    console.log('Response status:', response.status);
+    console.log('Response headers:', response.headers);
+
     if (!response.ok) {
-      throw new Error('Failed to generate topics');
+      const errorText = await response.text();
+      console.error('Error response:', errorText);
+      throw new Error(`HTTP ${response.status}: ${errorText}`);
     }
 
     const data = await response.json();
+    console.log('Response data:', data);
     return data.topics;
   } catch (error) {
     console.error('Error generating topics:', error);
-    // Fallback topics
+    // Always return fallback topics
     return `1. The Impact of ${subject} on Modern Society\n2. Emerging Trends in ${subject} Research\n3. Critical Analysis of ${subject} Methodologies\n4. Future Directions in ${subject} Studies\n5. Interdisciplinary Approaches to ${subject}`;
   }
 };
