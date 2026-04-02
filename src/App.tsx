@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar';
+import ScrollToTop from './components/ScrollToTop';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import ServicesPage from './pages/ServicesPage';
@@ -11,6 +12,7 @@ import Dashboard from './pages/Dashboard';
 import WriterPanel from './pages/WriterPanel';
 import AdminPanel from './pages/AdminPanel';
 import { Toaster } from 'sonner';
+import './styles/scrollbar.css';
 
 import Footer from './components/Footer';
 
@@ -28,7 +30,7 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300 flex flex-col">
       <Navbar />
-      <main className="flex-grow">
+      <main className="grow">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -50,6 +52,7 @@ export default function App() {
     <ThemeProvider>
       <AuthProvider>
         <Router>
+          <ScrollToTop />
           <AppContent />
         </Router>
       </AuthProvider>

@@ -36,18 +36,30 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     if (!user) return;
 
+    const handleFirestoreError = (error: any) => {
+      console.error('Firestore connection error:', error);
+      if (error.message?.includes('ERR_BLOCKED_BY_CLIENT')) {
+        toast.warning('Real-time updates blocked. Please disable ad blockers for full functionality.');
+      }
+      setLoading(false);
+    };
+
     const q = query(
       collection(db, 'orders'),
       where('clientUid', '==', user.uid)
     );
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const ordersData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Order));
-      // Sort client-side by createdAt in descending order
-      ordersData.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-      setOrders(ordersData);
-      setLoading(false);
-    });
+    const unsubscribe = onSnapshot(
+      q, 
+      (snapshot) => {
+        const ordersData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Order));
+        // Sort client-side by createdAt in descending order
+        ordersData.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        setOrders(ordersData);
+        setLoading(false);
+      },
+      (error) => handleFirestoreError(error)
+    );
 
     return () => unsubscribe();
   }, [user]);

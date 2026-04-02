@@ -5,10 +5,25 @@ import { CheckCircle, ArrowRight, Star, Shield, Zap, Users, Lightbulb, FileText 
 
 const LandingPage: React.FC = () => {
   return (
-    <div className="flex flex-col gap-20 pb-20">
+    <div className="flex flex-col  gap-20 pb-20">
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-20 pb-32">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative  overflow-hidden pt-20 pb-32">
+        {/* Video Background */}
+        <div className="absolute inset-0 w-full h-full">
+          <div className="absolute inset-0 bg-black/40 z-10"></div>
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ opacity: 0.6 }}
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src="/video.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div className="container mx-auto px-4 text-center relative z-20">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -18,14 +33,45 @@ const LandingPage: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold mb-8"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full  border border-primary/20 text-primary text-sm font-bold mb-8"
             >
-              <Zap className="h-4 w-4" />
-              Next-Gen Research Platform
+              {/* <Zap className="h-4 w-4" /> */}
+              
             </motion.div>
             <h1 className="text-5xl md:text-8xl font-extrabold tracking-tight mb-8 leading-[1.1]">
-              Empowering Research with <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">AI Precision</span>
+              <motion.span 
+                className="inline-block cursor-pointer"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                whileHover={{ 
+                  rotateY: 15,
+                  rotateX: -10,
+                  scale: 1.1,
+                  textShadow: "0 10px 40px rgba(59, 130, 246, 0.3)",
+                  transition: { duration: 0.3 }
+                }}
+                style={{
+                  transformStyle: "preserve-3d",
+                  perspective: "1000px"
+                }}
+              >
+                Empowering Research with
+              </motion.span>
+              <br />
+              <motion.span 
+                className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400"
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: "auto" }}
+                transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
+                style={{
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  display: "inline-block"
+                }}
+              >
+                AI Precision
+              </motion.span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
               Brain Script is your ultimate platform for research writing, data analysis, and academic excellence. 

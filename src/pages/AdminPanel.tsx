@@ -15,17 +15,33 @@ const AdminPanel: React.FC = () => {
   const [offeringPrice, setOfferingPrice] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
-    const unsubscribeOrders = onSnapshot(collection(db, 'orders'), (snapshot) => {
-      const ordersData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Order));
-      // Sort client-side by createdAt in descending order
-      ordersData.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-      setOrders(ordersData);
-    });
+    const handleFirestoreError = (error: any) => {
+      console.error('Firestore connection error:', error);
+      if (error.message?.includes('ERR_BLOCKED_BY_CLIENT')) {
+        toast.warning('Real-time updates blocked. Please disable ad blockers for full functionality.');
+      }
+    };
 
-    const unsubscribeUsers = onSnapshot(collection(db, 'users'), (snapshot) => {
-      setUsers(snapshot.docs.map(doc => doc.data() as UserProfile));
-      setLoading(false);
-    });
+    const unsubscribeOrders = onSnapshot(
+      collection(db, 'orders'), 
+      (snapshot) => {
+        const ordersData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Order));
+        // Sort client-side by createdAt in descending order
+        ordersData.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        setOrders(ordersData);
+      },
+      (error) => handleFirestoreError(error)
+    );
+
+    const unsubscribeUsers = onSnapshot(
+      collection(db, 'users'), 
+      (snapshot) => {
+        setUsers(snapshot.docs.map(doc => doc.data() as UserProfile));
+      },
+      (error) => handleFirestoreError(error)
+    );
+
+    setLoading(false);
 
     return () => {
       unsubscribeOrders();

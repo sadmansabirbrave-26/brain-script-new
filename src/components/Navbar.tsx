@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-primary/10 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+    <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/30 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/20 shadow-lg shadow-black/10">
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-3 font-bold text-2xl group">
           <div className="rounded-xl text-primary scale-110 group-hover:scale-110 transition-transform">

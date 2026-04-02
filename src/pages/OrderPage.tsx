@@ -111,13 +111,13 @@ const OrderPage: React.FC = () => {
                   <option value="editing" className="bg-background">Editing & Proofreading</option>
                   <option value="thesis" className="bg-background">Thesis Support</option>
                 </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground  pointer-events-none" />
               </div>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-3 ">
               <label className="text-sm font-bold uppercase tracking-widest text-muted-foreground ml-1">Deadline</label>
               <div className="relative">
-                <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground text-white p-1 rounded-lg" />
                 <input
                   type="date"
                   required
